@@ -1,0 +1,74 @@
+name: Build and Deploy Resume
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - resume_byte_cn.tex
+      - changyue.jpg
+      - fonts/**
+      - fontawesome.sty
+      - fontawesomesymbols-*.tex
+      - index.html
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-xetex \
+            texlive-lang-chinese \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            fonts-fandol
+
+      - name: Build resume PDF
+        run: |
+          xelatex -interaction=nonstopmode -halt-on-error resume_byte_cn.tex
+          xelatex -interaction=nonstopmode -halt-on-error resume_byte_cn.tex
+
+      - name: Prepare Pages artifact
+        run: |
+          mkdir -p _site
+          cp index.html _site/index.html
+          cp resume_byte_cn.tex _site/resume_byte_cn.tex
+          cp resume_byte_cn.pdf _site/resume_byte_cn.pdf
+          cp resume_byte_cn.pdf _site/resume.pdf
+          touch _site/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
