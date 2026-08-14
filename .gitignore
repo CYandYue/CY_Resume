@@ -9,6 +9,7 @@
 /\!*
 .DS_Store
 *.pdf
+_site/
 
 ############################################
 ## LATEX TEMPORARY FILES
