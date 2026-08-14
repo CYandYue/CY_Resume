@@ -26,10 +26,6 @@
       }
 
       header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
         max-width: 1120px;
         margin: 0 auto;
         padding: 18px 22px 14px;
@@ -47,31 +43,6 @@
         margin-top: 4px;
         color: var(--muted);
         font-size: 14px;
-      }
-
-      nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      a.button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 36px;
-        padding: 0 13px;
-        border: 1px solid var(--accent);
-        color: var(--accent);
-        background: #fff;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 600;
-      }
-
-      a.button.primary {
-        color: #fff;
-        background: var(--accent);
       }
 
       main {
@@ -95,9 +66,6 @@
 
       @media (max-width: 720px) {
         header {
-          align-items: flex-start;
-          flex-direction: column;
-          gap: 12px;
           padding: 16px;
         }
 
@@ -108,17 +76,8 @@
         h1 {
           font-size: 22px;
         }
-
-        nav {
-          width: 100%;
-        }
-
-        a.button {
-          flex: 1 1 auto;
-        }
-
         .viewer {
-          height: calc(100vh - 164px);
+          height: calc(100vh - 132px);
           min-height: 560px;
         }
       }
@@ -128,13 +87,8 @@
     <header>
       <div>
         <h1>常越 | 中文简历</h1>
-        <div class="meta">自动由 GitHub Actions 编译并发布</div>
+        <div class="meta">更新日期：__UPDATED_AT__</div>
       </div>
-      <nav aria-label="简历链接">
-        <a class="button primary" href="resume.pdf">打开 PDF</a>
-        <a class="button" href="resume.pdf" download>下载 PDF</a>
-        <a class="button" href="resume_byte_cn.tex">TeX 源码</a>
-      </nav>
     </header>
     <main>
       <object class="viewer" data="resume.pdf" type="application/pdf">

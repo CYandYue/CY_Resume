@@ -51,6 +51,8 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/index.html
+          updated_at="$(TZ=Asia/Shanghai date +'%Y-%m-%d')"
+          sed -i "s/__UPDATED_AT__/${updated_at}/g" _site/index.html
           cp resume_byte_cn.tex _site/resume_byte_cn.tex
           cp resume_byte_cn.pdf _site/resume_byte_cn.pdf
           cp resume_byte_cn.pdf _site/resume.pdf
