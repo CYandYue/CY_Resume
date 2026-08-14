@@ -33,19 +33,12 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Install TeX Live
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            texlive-xetex \
-            texlive-lang-chinese \
-            texlive-latex-extra \
-            texlive-fonts-recommended
-
       - name: Build resume PDF
-        run: |
-          xelatex -interaction=nonstopmode -halt-on-error resume_byte_cn.tex
-          xelatex -interaction=nonstopmode -halt-on-error resume_byte_cn.tex
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: resume_byte_cn.tex
+          latexmk_use_xelatex: true
+          args: -interaction=nonstopmode -halt-on-error -file-line-error
 
       - name: Prepare Pages artifact
         run: |
